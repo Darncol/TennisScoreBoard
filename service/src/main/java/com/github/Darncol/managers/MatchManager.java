@@ -1,14 +1,15 @@
 package com.github.Darncol.managers;
 
-import com.github.Darncol.Match;
-import com.github.Darncol.PlayerDTO;
+import com.github.Darncol.*;
 import com.github.Darncol.services.FinishedMatchesPersistenceService;
 import com.github.Darncol.services.OngoingMathcesService;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 public class MatchManager {
-    public UUID startNewMatch(String name1, String name2) throws Exception {
+    public UUID startNewMatch(String name1, String name2) throws IOException, InterruptedException, ChatGPTException, InvalidDataException {
         return OngoingMathcesService.startNewMatch(name1, name2);
     }
 
@@ -31,7 +32,7 @@ public class MatchManager {
         }
     }
 
-    public boolean validateWinCondition(UUID uuid) throws IllegalArgumentException {
+    public boolean validateWinCondition(UUID uuid) throws DataBaseException {
         Match ongoingMatch = OngoingMathcesService.getMatch(uuid);
         var matchCalculation = OngoingMathcesService.getCalculation(uuid);
 

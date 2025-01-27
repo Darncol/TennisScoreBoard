@@ -1,5 +1,7 @@
-package com.github.Darncol.servlets;
+package com.github.Darncol.servlet;
 
+import com.github.Darncol.ChatGPTException;
+import com.github.Darncol.InvalidDataException;
 import com.github.Darncol.managers.MatchManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,7 +16,7 @@ import java.util.UUID;
 @WebServlet("/new-match")
 public class NewMatchServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, InvalidDataException, ChatGPTException {
         var manager = new MatchManager();
 
         String player1 = req.getParameter("playerOne");
@@ -27,11 +29,12 @@ public class NewMatchServlet extends HttpServlet {
             session.setAttribute("uuid", uuid);
 
             resp.sendRedirect("match-score?uuid=" + uuid);
-        } catch (IllegalArgumentException e) {
-            resp.sendRedirect(req.getContextPath() + "/index.jsp?message=" + e.getMessage());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            resp.sendRedirect(req.getContextPath() + "/index.jsp?message=Something went wrong with bad words validation :(");
+        } catch (InterruptedException | ChatGPTException e) {
+            throw new ChatGPTException(e.getMessage());
+        } catch (InvalidDataException e) {
+            throw new InvalidDataException(e.getMessage());
+        }catch (IOException e) {
+            throw new IOException(e.getMessage());
         }
     }
 }

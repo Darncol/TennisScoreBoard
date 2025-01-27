@@ -24,8 +24,8 @@
 		</div>
 		<div>
 			<nav class="nav-links">
-				<a class="nav-link" href="#">Home</a>
-				<a class="nav-link" href="#">Matches</a>
+				<a class="nav-link" href="index.jsp">Home</a>
+				<a class="nav-link" href="matches.jsp">Matches</a>
 			</nav>
 		</div>
 	</section>
@@ -51,7 +51,6 @@
 					<td class="table-text">${player1.games}</td>
 					<td class="table-text">${player1.points}</td>
 					<td class="table-text">
-						<%--                        <div class="score-btn">Score</div>--%>
 						<form method="post" action="match-score">
 							<input type="hidden" name="roundWinner" value="1">
 							<button type="submit" class="score-btn">Win round</button>

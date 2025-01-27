@@ -453,16 +453,18 @@ footer {
 
 .table-matches th {
     font-weight: bold;
-    padding: 5px;
+    padding: 12px 15px; /* Увеличиваем отступы */
     background: #dddddd;
-    border: 1px solid #dddddd;
+    border: 1px solid #ccc; /* Делаем границы одинаковыми */
+    text-align: center; /* Выравнивание по центру */
 }
 
 .table-matches td {
-    width: 33%;
-    border-bottom: 1px solid #dddddd;
-    padding: 51px 0;
+    width: 25%; /* Равномерное распределение для 4 колонок */
+    border: 1px solid #ccc; /* Добавляем границы для всех ячеек */
+    padding: 20px 15px; /* Оптимизируем отступы */
     text-align: center;
+    vertical-align: middle; /* Вертикальное выравнивание */
 }
 
 .table-matches tr td:first-child, .table-matches tr th:first-child {
@@ -475,10 +477,10 @@ footer {
 
 .winner-name-td {
     background-color: #dddddd;
-    display: block;
-    width: 38%;
-    margin: 0 auto;
+    display: inline-block; /* Заменяем block на inline-block */
+    padding: 8px 20px;
     border-radius: 18px;
+    margin: 5px 0;
 }
 
 .prev, .next {
@@ -506,4 +508,17 @@ footer {
 
 .num-page.current {
     font-weight: bold;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .table-matches th,
+    .table-matches td {
+        padding: 10px 8px; /* Уменьшаем отступы */
+        font-size: 14px; /* Уменьшаем размер шрифта */
+    }
+
+    .winner-name-td {
+        padding: 6px 15px;
+    }
 }

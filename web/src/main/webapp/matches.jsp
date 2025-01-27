@@ -1,14 +1,11 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tennis Scoreboard | Finished Matches</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-
-    <script src="js/app.js"></script>
+    <script src="js/matches.js" defer></script>
 </head>
 
 <body>
@@ -22,70 +19,48 @@
         </div>
         <div>
             <nav class="nav-links">
-                <a class="nav-link" href="#">Home</a>
-                <a class="nav-link" href="#">Matches</a>
+                <a class="nav-link" href="index.jsp">Home</a>
+                <a class="nav-link" href="matches.jsp">Matches</a>
             </nav>
         </div>
     </section>
 </header>
+
 <main>
     <div class="container">
         <h1>Matches</h1>
         <div class="input-container">
-            <input class="input-filter" placeholder="Filter by name" type="text" />
+            <input id="filter-input" class="input-filter" placeholder="Filter by name" type="text" />
             <div>
-                <a href="#">
-                    <button class="btn-filter">Reset Filter</button>
-                </a>
+                <button id="filter-btn" class="btn-filter">Search</button>
+                <button id="reset-btn" class="btn-filter">Reset</button>
             </div>
         </div>
 
         <table class="table-matches">
+            <thead>
             <tr>
+                <th>Match ID</th>
                 <th>Player One</th>
                 <th>Player Two</th>
                 <th>Winner</th>
             </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Rafael Nadal</span></td>
-            </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Roger Federer</span></td>
-            </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Rafael Nadal</span></td>
-            </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Roger Federer</span></td>
-            </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Rafael Nadal</span></td>
-            </tr>
+            </thead>
+            <tbody id="matches-table-body">
+            </tbody>
         </table>
 
         <div class="pagination">
-            <a class="prev" href="#"> < </a>
-            <a class="num-page current" href="#">1</a>
-            <a class="num-page" href="#">2</a>
-            <a class="num-page" href="#">3</a>
-            <a class="next" href="#"> > </a>
+            <button id="prev-page" class="prev">&lt;</button>
+            <span id="current-page" class="num-page">1</span>
+            <button id="next-page" class="next">&gt;</button>
         </div>
     </div>
 </main>
+
 <footer>
     <div class="footer">
-        <p>&copy; Tennis Scoreboard, project from <a href="https://zhukovsd.github.io/java-backend-learning-course/">zhukovsd/java-backend-learning-course</a>
-            roadmap.</p>
+        <p>&copy; Tennis Scoreboard</p>
     </div>
 </footer>
 </body>

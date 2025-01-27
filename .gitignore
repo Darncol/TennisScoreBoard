@@ -36,3 +36,6 @@ build/
 
 #api keys
 service/src/main/java/com/github/Darncol/hidden/
+
+#out
+out/

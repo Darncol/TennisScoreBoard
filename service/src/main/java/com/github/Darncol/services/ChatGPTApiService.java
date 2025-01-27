@@ -1,10 +1,14 @@
 package com.github.Darncol.services;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.Darncol.ChatGPTException;
 
 import java.util.Map;
 
@@ -21,7 +25,7 @@ public class ChatGPTApiService {
         this.objectMapper = new ObjectMapper();
     }
 
-    public boolean checkForInappropriateContent(String text) throws Exception {
+    public boolean checkForInappropriateContent(String text) throws ChatGPTException, IOException, InterruptedException {
 
         Map<String, Object> requestBody = Map.of(
                 "model", "gpt-4o",
@@ -42,10 +46,11 @@ public class ChatGPTApiService {
                 .POST(HttpRequest.BodyPublishers.ofString(requestBodyJson))
                 .build();
 
+
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() != 200) {
-            throw new RuntimeException("Failed to call API: " + response.body());
+            throw new ChatGPTException("Failed to call API: " + response.body());
         }
 
         Map<?, ?> responseBody = objectMapper.readValue(response.body(), Map.class);

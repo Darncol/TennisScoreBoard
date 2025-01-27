@@ -15,6 +15,7 @@
         <module>model</module>
         <module>util</module>
         <module>api</module>
+        <module>exception</module>
     </modules>
     <packaging>pom</packaging>
 

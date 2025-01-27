@@ -24,7 +24,7 @@ public class HibernateUtil {
                             .build()
             );
         } catch (HibernateException e) {
-            throw new IllegalArgumentException(e.getMessage());
+            throw new DataBaseException(e.getMessage());
         }
     }
 

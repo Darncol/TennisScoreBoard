@@ -1,3 +1,4 @@
+
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -21,8 +22,8 @@
 		</div>
 		<div>
 			<nav class="nav-links">
-				<a class="nav-link" href="#">Home</a>
-				<a class="nav-link" href="#">Matches</a>
+				<a class="nav-link" href="index.jsp">Home</a>
+				<a class="nav-link" href="matches.jsp">Matches</a>
 			</nav>
 		</div>
 	</section>
@@ -34,7 +35,7 @@
 			<div class="new-match-image"></div>
 			<div class="form-container center">
 				<form method="post" action="new-match">
-					<p style="color: red;">Sample error message</p>
+					<p style="color: red;">${param.message}</p>
 					<label class="label-player" for="playerOne">Player one</label>
 					<input class="input-player" id="playerOne" name="playerOne" placeholder="Name" type="text" required
 					       title="Enter a name">

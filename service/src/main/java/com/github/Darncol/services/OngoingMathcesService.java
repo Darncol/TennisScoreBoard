@@ -1,11 +1,10 @@
 package com.github.Darncol.services;
 
-import com.github.Darncol.DatabaseManager;
-import com.github.Darncol.Match;
-import com.github.Darncol.Player;
+import com.github.Darncol.*;
 import com.github.Darncol.managers.ValidationManager;
 import lombok.Getter;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,7 +18,7 @@ public class OngoingMathcesService {
 
     private OngoingMathcesService() {}
 
-    public static UUID startNewMatch(String name1, String name2) throws Exception {
+    public static UUID startNewMatch(String name1, String name2) throws IOException, ChatGPTException, InterruptedException, InvalidDataException {
         ValidationManager.sameNameValidation(name1, name2);
         ValidationManager.nameValidation(name1);
         ValidationManager.nameValidation(name2);
@@ -56,17 +55,17 @@ public class OngoingMathcesService {
         onGoingMatchCalculation.remove(uuid);
     }
 
-    private static Player save(String name) throws IllegalArgumentException {
+    private static Player save(String name) throws DataBaseException {
         Player player = new Player(name);
         DatabaseManager.saveEntity(player);
         return player;
     }
 
-    private static boolean isPlayerExist(String playerName) {
+    private static boolean isPlayerExist(String playerName) throws DataBaseException {
         return DatabaseManager.getPlayerByName(playerName) != null;
     }
 
-    private static Player getPlayer(String playerName) {
+    private static Player getPlayer(String playerName) throws DataBaseException {
         return DatabaseManager.getPlayerByName(playerName);
     }
 }

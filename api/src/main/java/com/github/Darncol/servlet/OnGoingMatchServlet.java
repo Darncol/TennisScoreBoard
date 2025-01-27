@@ -1,4 +1,4 @@
-package com.github.Darncol.servlets;
+package com.github.Darncol.servlet;
 
 import com.github.Darncol.Match;
 import com.github.Darncol.managers.MatchManager;
@@ -39,33 +39,21 @@ public class OnGoingMatchServlet extends HttpServlet {
         String roundWinner = req.getParameter("roundWinner");
 
         if (roundWinner == null || roundWinner.isEmpty()) {
-            String message = "invalid round winner";
-            resp.sendRedirect(req.getContextPath() + "/index.jsp?message=" + message);
-            return;
+            throw new ServletException("Invalid round winner");
         }
 
         if (uuid == null) {
-            String message = "invalid uuid";
-            resp.sendRedirect(req.getContextPath() + "/index.jsp?message=" + message);
+            throw new ServletException("Invalid uuid");
+        }
+
+        manager.nextRound(roundWinner, uuid);
+
+        if (manager.validateWinCondition(uuid)) {
+            session.removeAttribute("uuid");
+            String message = manager.getWinnerName(uuid) + " Win the game!";
+            manager.finishMatch(uuid);
+            resp.sendRedirect(req.getContextPath() + "/index.jsp?message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
             return;
-        }
-
-        try {
-            manager.nextRound(roundWinner, uuid);
-        } catch (IllegalStateException e) {
-            resp.sendRedirect(req.getContextPath() + "/index.jsp?message=" + e.getMessage());
-        }
-
-        try {
-            if (manager.validateWinCondition(uuid)) {
-                session.removeAttribute("uuid");
-                String message = manager.getWinnerName(uuid) + " Win the game!";
-                manager.finishMatch(uuid);
-                resp.sendRedirect(req.getContextPath() + "/index.jsp?message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
-                return;
-            }
-        } catch (IllegalStateException e) {
-            resp.sendRedirect(req.getContextPath() + "/index.jsp?message=" + e.getMessage());
         }
 
         req.setAttribute("player1", manager.getPlayer1DTO(uuid));
