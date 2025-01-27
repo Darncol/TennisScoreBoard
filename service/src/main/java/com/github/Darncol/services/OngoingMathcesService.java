@@ -1,5 +1,6 @@
 package com.github.Darncol.services;
 
+import com.github.Darncol.DatabaseManager;
 import com.github.Darncol.Match;
 import com.github.Darncol.Player;
 import com.github.Darncol.managers.ValidationManager;
@@ -23,8 +24,13 @@ public class OngoingMathcesService {
         ValidationManager.nameValidation(name1);
         ValidationManager.nameValidation(name2);
 
-        Player player1 = new Player(name1);
-        Player player2 = new Player(name2);
+        Player player1 = isPlayerExist(name1) ?
+                getPlayer(name1) :
+                save(name1);
+
+        Player player2 = isPlayerExist(name2) ?
+                getPlayer(name2) :
+                save(name2);
 
         UUID uuid = UUID.randomUUID();
 
@@ -48,5 +54,19 @@ public class OngoingMathcesService {
     public static void deleteFinishedMatch(UUID uuid) {
         onGoingMatch.remove(uuid);
         onGoingMatchCalculation.remove(uuid);
+    }
+
+    private static Player save(String name) throws IllegalArgumentException {
+        Player player = new Player(name);
+        DatabaseManager.saveEntity(player);
+        return player;
+    }
+
+    private static boolean isPlayerExist(String playerName) {
+        return DatabaseManager.getPlayerByName(playerName) != null;
+    }
+
+    private static Player getPlayer(String playerName) {
+        return DatabaseManager.getPlayerByName(playerName);
     }
 }

@@ -25,9 +25,11 @@ public class FinishedMatchesPersistenceService {
         DatabaseManager.saveEntity(match);
     }
 
-    public static void save(Player player) throws IllegalArgumentException {
-        if(DatabaseManager.getPlayerByName(player.getName()) == null) {
-            DatabaseManager.saveEntity(player);
-        }
-    }
+//    public static void save(Player player) throws IllegalArgumentException {
+//        DatabaseManager.saveEntity(player);
+//    }
+//
+//    public static boolean isPlayerExist(String playerName) {
+//        return DatabaseManager.getPlayerByName(playerName) != null;
+//    }
 }

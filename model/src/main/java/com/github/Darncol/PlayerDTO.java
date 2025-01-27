@@ -19,4 +19,8 @@ public class PlayerDTO {
     public PlayerDTO(Player player) {
         this.name = player.getName();
     }
+
+    public PlayerDTO(String name) {
+        this.name = name;
+    }
 }

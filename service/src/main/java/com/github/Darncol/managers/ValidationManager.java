@@ -14,7 +14,7 @@ public class ValidationManager {
         }
     }
 
-    public static void nameValidation(String name) throws Exception {
+    public static void nameValidation(String name) throws IllegalArgumentException, Exception {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Please enter both player names");
         } else if (name.length() < 3) {

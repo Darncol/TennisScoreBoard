@@ -36,8 +36,6 @@ public class MatchManager {
         var matchCalculation = OngoingMathcesService.getCalculation(uuid);
 
         if (matchCalculation.isGameFinished() && ongoingMatch.getWinner() != null) {
-            FinishedMatchesPersistenceService.save(ongoingMatch.getPlayer1());
-            FinishedMatchesPersistenceService.save(ongoingMatch.getPlayer2());
             FinishedMatchesPersistenceService.save(ongoingMatch);
             return true;
         }
@@ -66,9 +64,5 @@ public class MatchManager {
 
     public void finishMatch(UUID uuid) {
         OngoingMathcesService.deleteFinishedMatch(uuid);
-    }
-
-    private boolean isPlayerExists(String playerName) {
-        FinishedMatchesPersistenceService.isPlayerExist(playerName);
     }
 }

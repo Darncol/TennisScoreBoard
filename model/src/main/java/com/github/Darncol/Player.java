@@ -13,6 +13,7 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Getter
     @Column(nullable = false, unique = true)
     private String name;
 
