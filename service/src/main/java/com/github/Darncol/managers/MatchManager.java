@@ -31,7 +31,7 @@ public class MatchManager {
         }
     }
 
-    public boolean validateWinCondition(UUID uuid) {
+    public boolean validateWinCondition(UUID uuid) throws IllegalArgumentException {
         Match ongoingMatch = OngoingMathcesService.getMatch(uuid);
         var matchCalculation = OngoingMathcesService.getCalculation(uuid);
 
@@ -65,6 +65,10 @@ public class MatchManager {
     }
 
     public void finishMatch(UUID uuid) {
-            OngoingMathcesService.deleteFinishedMatch(uuid);
+        OngoingMathcesService.deleteFinishedMatch(uuid);
+    }
+
+    private boolean isPlayerExists(String playerName) {
+        FinishedMatchesPersistenceService.isPlayerExist(playerName);
     }
 }

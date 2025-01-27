@@ -28,7 +28,6 @@ public class OngoingMathcesService {
 
         UUID uuid = UUID.randomUUID();
 
-
         Match match = new Match(player1, player2);
         var matchCalculation = new MatchCalculationService(match);
 

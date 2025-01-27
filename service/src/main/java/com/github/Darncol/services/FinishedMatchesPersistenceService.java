@@ -26,6 +26,8 @@ public class FinishedMatchesPersistenceService {
     }
 
     public static void save(Player player) throws IllegalArgumentException {
-        DatabaseManager.saveEntity(player);
+        if(DatabaseManager.getPlayerByName(player.getName()) == null) {
+            DatabaseManager.saveEntity(player);
+        }
     }
 }

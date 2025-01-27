@@ -52,16 +52,20 @@ public class OnGoingMatchServlet extends HttpServlet {
 
         try {
             manager.nextRound(roundWinner, uuid);
-        }catch (IllegalStateException e) {
+        } catch (IllegalStateException e) {
             resp.sendRedirect(req.getContextPath() + "/index.jsp?message=" + e.getMessage());
         }
 
-        if (manager.validateWinCondition(uuid)) {
-            session.removeAttribute("uuid");
-            String message = manager.getWinnerName(uuid) + " Win the game!";
-            manager.finishMatch(uuid);
-            resp.sendRedirect(req.getContextPath() + "/index.jsp?message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
-            return;
+        try {
+            if (manager.validateWinCondition(uuid)) {
+                session.removeAttribute("uuid");
+                String message = manager.getWinnerName(uuid) + " Win the game!";
+                manager.finishMatch(uuid);
+                resp.sendRedirect(req.getContextPath() + "/index.jsp?message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
+                return;
+            }
+        } catch (IllegalStateException e) {
+            resp.sendRedirect(req.getContextPath() + "/index.jsp?message=" + e.getMessage());
         }
 
         req.setAttribute("player1", manager.getPlayer1DTO(uuid));
