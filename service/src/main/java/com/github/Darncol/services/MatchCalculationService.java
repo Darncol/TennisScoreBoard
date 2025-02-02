@@ -61,6 +61,11 @@ class PlayerAction {
     private Score opponentScore;
 
     public void execute() {
+        if (isAdvantageActive()) {
+            incrementAdvantage(playerScore);
+            return;
+        }
+
         incrementScore(playerScore);
 
         if (playerScore.getGames() == 7) {
@@ -83,6 +88,18 @@ class PlayerAction {
                 incrementGames(player);
                 break;
         }
+    }
+
+    private void incrementAdvantage(Score player) {
+        playerScore.setPoints(player.getPoints() + 15);
+
+        if (playerScore.getPoints() - opponentScore.getPoints() >= 30) {
+            incrementGames(player);
+        }
+    }
+
+    private boolean isAdvantageActive() {
+        return playerScore.getPoints() >= 40 && opponentScore.getPoints() >= 40;
     }
 
     private void incrementGames(Score player) {
