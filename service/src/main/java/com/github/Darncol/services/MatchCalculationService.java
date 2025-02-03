@@ -91,11 +91,11 @@ class PlayerAction {
     }
 
     private void incrementAdvantage() {
-        if (playerScore.getAdvantage() == false && opponentScore.getAdvantage() == false) {
+        if (!playerScore.getAdvantage() && !opponentScore.getAdvantage()) {
             playerScore.setAdvantage(true);
-        } else if (playerScore.getAdvantage() == false && opponentScore.getAdvantage() == true) {
+        } else if (!playerScore.getAdvantage() && opponentScore.getAdvantage()) {
             opponentScore.setAdvantage(false);
-        } else if (playerScore.getAdvantage() == true && opponentScore.getAdvantage() == false) {
+        } else if (playerScore.getAdvantage() && !opponentScore.getAdvantage()) {
             playerScore.setAdvantage(false);
             opponentScore.setAdvantage(false);
             incrementGames(playerScore);
