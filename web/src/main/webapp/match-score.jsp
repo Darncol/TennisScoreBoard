@@ -49,7 +49,7 @@
 					<td class="table-text">${player1.name}</td>
 					<td class="table-text">${player1.sets}</td>
 					<td class="table-text">${player1.games}</td>
-					<td class="table-text">${player1.points}</td>
+					<td class="table-text">${player1.getPoints()}</td>
 					<td class="table-text">
 						<form method="post" action="match-score">
 							<input type="hidden" name="roundWinner" value="1">
@@ -61,7 +61,7 @@
 					<td class="table-text">${player2.name}</td>
 					<td class="table-text">${player2.sets}</td>
 					<td class="table-text">${player2.games}</td>
-					<td class="table-text">${player2.points}</td>
+					<td class="table-text">${player2.getPoints()}</td>
 					<td class="table-text">
 						<form method="post" action="match-score">
 							<input type="hidden" name="roundWinner" value="2">

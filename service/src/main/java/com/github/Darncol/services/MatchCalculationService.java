@@ -61,45 +61,49 @@ class PlayerAction {
     private Score opponentScore;
 
     public void execute() {
-        if (isAdvantageActive()) {
-            incrementAdvantage(playerScore);
+        if (isAdvantageConditionMet()) {
+            incrementAdvantage();
             return;
         }
 
-        incrementScore(playerScore);
+        incrementScore();
 
         if (playerScore.getGames() == 7) {
             incrementSets(playerScore);
         }
     }
 
-    protected void incrementScore(Score player) {
-        switch (player.getPoints()) {
+    protected void incrementScore() {
+        switch (playerScore.getPoints()) {
             case 0:
-                player.setPoints(15);
+                playerScore.setPoints(15);
                 break;
             case 15:
-                player.setPoints(30);
+                playerScore.setPoints(30);
                 break;
             case 30:
-                player.setPoints(40);
+                playerScore.setPoints(40);
                 break;
             default:
-                incrementGames(player);
+                incrementGames(playerScore);
                 break;
         }
     }
 
-    private void incrementAdvantage(Score player) {
-        playerScore.setPoints(player.getPoints() + 15);
-
-        if (playerScore.getPoints() - opponentScore.getPoints() >= 30) {
-            incrementGames(player);
+    private void incrementAdvantage() {
+        if (playerScore.getAdvantage() == false && opponentScore.getAdvantage() == false) {
+            playerScore.setAdvantage(true);
+        } else if (playerScore.getAdvantage() == false && opponentScore.getAdvantage() == true) {
+            opponentScore.setAdvantage(false);
+        } else if (playerScore.getAdvantage() == true && opponentScore.getAdvantage() == false) {
+            playerScore.setAdvantage(false);
+            opponentScore.setAdvantage(false);
+            incrementGames(playerScore);
         }
     }
 
-    private boolean isAdvantageActive() {
-        return playerScore.getPoints() >= 40 && opponentScore.getPoints() >= 40;
+    private boolean isAdvantageConditionMet() {
+        return playerScore.getPoints() == 40 && opponentScore.getPoints() == 40;
     }
 
     private void incrementGames(Score player) {
@@ -130,7 +134,8 @@ class PlayerActionTieBreak extends PlayerAction {
     }
 
     @Override
-    protected void incrementScore(Score player) {
+    protected void incrementScore() {
+        Score player = getPlayerScore();
         player.setPoints(player.getPoints() + 1);
 
         if (player.getPoints() >= 7 && getPlayerScore().getPoints() - getOpponentScore().getPoints() >= 2) {
