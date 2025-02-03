@@ -22,34 +22,34 @@ public class MatchCalculationService {
         this.match = match;
     }
 
-    public void addPointToPlayer1() {
-        if (isTieBreakActive()) {
-            new PlayerActionTieBreak(player1Score, player2Score).execute();
+    public void awardPointToFirstPlayer() {
+        if (isTieBreakMode()) {
+            new PlayerActionTieBreak(player1Score, player2Score).processPoint();
         } else {
-            new PlayerAction(player1Score, player2Score).execute();
+            new PlayerAction(player1Score, player2Score).processPoint();
         }
 
-        evaluateWinCondition(player1Score, match.getPlayer1());
+        checkForMatchWinner(player1Score, match.getPlayer1());
     }
 
-    public void addPointToPlayer2() {
-        if (isTieBreakActive()) {
-            new PlayerActionTieBreak(player2Score, player1Score).execute();
+    public void awardPointToSecondPlayer() {
+        if (isTieBreakMode()) {
+            new PlayerActionTieBreak(player2Score, player1Score).processPoint();
         } else {
-            new PlayerAction(player2Score, player1Score).execute();
+            new PlayerAction(player2Score, player1Score).processPoint();
         }
 
-        evaluateWinCondition(player2Score, match.getPlayer2());
+        checkForMatchWinner(player2Score, match.getPlayer2());
     }
 
-    private void evaluateWinCondition(Score score, Player player) {
+    private void checkForMatchWinner(Score score, Player player) {
         if (score.isWinner()) {
             match.setWinner(player);
             gameFinished = true;
         }
     }
 
-    private boolean isTieBreakActive() {
+    private boolean isTieBreakMode() {
         return player1Score.getGames() == 6 && player2Score.getGames() == 6;
     }
 }
@@ -60,20 +60,20 @@ class PlayerAction {
     private Score playerScore;
     private Score opponentScore;
 
-    public void execute() {
-        if (isAdvantageConditionMet()) {
-            incrementAdvantage();
+    public void processPoint() {
+        if (isDeuce()) {
+            handleAdvantagePoint();
             return;
         }
 
-        incrementScore();
+        updateScore();
 
         if (playerScore.getGames() == 7) {
-            incrementSets(playerScore);
+            awardSet(playerScore);
         }
     }
 
-    protected void incrementScore() {
+    protected void updateScore() {
         switch (playerScore.getPoints()) {
             case 0:
                 playerScore.setPoints(15);
@@ -85,12 +85,12 @@ class PlayerAction {
                 playerScore.setPoints(40);
                 break;
             default:
-                incrementGames(playerScore);
+                awardGame(playerScore);
                 break;
         }
     }
 
-    private void incrementAdvantage() {
+    private void handleAdvantagePoint() {
         if (!playerScore.getAdvantage() && !opponentScore.getAdvantage()) {
             playerScore.setAdvantage(true);
         } else if (!playerScore.getAdvantage() && opponentScore.getAdvantage()) {
@@ -98,31 +98,31 @@ class PlayerAction {
         } else if (playerScore.getAdvantage() && !opponentScore.getAdvantage()) {
             playerScore.setAdvantage(false);
             opponentScore.setAdvantage(false);
-            incrementGames(playerScore);
+            awardGame(playerScore);
         }
     }
 
-    private boolean isAdvantageConditionMet() {
+    private boolean isDeuce() {
         return playerScore.getPoints() == 40 && opponentScore.getPoints() == 40;
     }
 
-    private void incrementGames(Score player) {
+    private void awardGame(Score player) {
         player.setGames(player.getGames() + 1);
-        resetScore();
+        resetPoints();
     }
 
-    protected void incrementSets(Score player) {
+    protected void awardSet(Score player) {
         player.setSets(player.getSets() + 1);
-        resetScore();
-        resetGamesCount();
+        resetPoints();
+        resetGames();
     }
 
-    private void resetScore() {
+    private void resetPoints() {
         playerScore.setPoints(0);
         opponentScore.setPoints(0);
     }
 
-    private void resetGamesCount() {
+    private void resetGames() {
         playerScore.setGames(0);
         opponentScore.setGames(0);
     }
@@ -134,12 +134,12 @@ class PlayerActionTieBreak extends PlayerAction {
     }
 
     @Override
-    protected void incrementScore() {
+    protected void updateScore() {
         Score player = getPlayerScore();
         player.setPoints(player.getPoints() + 1);
 
         if (player.getPoints() >= 7 && getPlayerScore().getPoints() - getOpponentScore().getPoints() >= 2) {
-            incrementSets(player);
+            awardSet(player);
         }
     }
 }

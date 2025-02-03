@@ -3,7 +3,6 @@ package com.github.Darncol;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

@@ -5,7 +5,6 @@ import com.github.Darncol.services.FinishedMatchesPersistenceService;
 import com.github.Darncol.services.OngoingMathcesService;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 public class MatchManager {
@@ -22,10 +21,10 @@ public class MatchManager {
 
         switch (roundWinner) {
             case "1":
-                matchCalculation.addPointToPlayer1();
+                matchCalculation.awardPointToFirstPlayer();
                 break;
             case "2":
-                matchCalculation.addPointToPlayer2();
+                matchCalculation.awardPointToSecondPlayer();
                 break;
             default:
                 break;

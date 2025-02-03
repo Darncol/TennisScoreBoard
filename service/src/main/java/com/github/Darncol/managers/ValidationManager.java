@@ -1,7 +1,6 @@
 package com.github.Darncol.managers;
 
 import com.github.Darncol.ChatGPTException;
-import com.github.Darncol.DatabaseManager;
 import com.github.Darncol.InvalidDataException;
 import com.github.Darncol.hidden.HiddenApi;
 import com.github.Darncol.services.ChatGPTApiService;
