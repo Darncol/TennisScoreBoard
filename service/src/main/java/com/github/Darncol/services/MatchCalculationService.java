@@ -90,6 +90,12 @@ class PlayerAction {
         }
     }
 
+    protected void awardSet(Score player) {
+        player.setSets(player.getSets() + 1);
+        resetPoints();
+        resetGames();
+    }
+
     private void handleAdvantagePoint() {
         if (!playerScore.getAdvantage() && !opponentScore.getAdvantage()) {
             playerScore.setAdvantage(true);
@@ -109,12 +115,6 @@ class PlayerAction {
     private void awardGame(Score player) {
         player.setGames(player.getGames() + 1);
         resetPoints();
-    }
-
-    protected void awardSet(Score player) {
-        player.setSets(player.getSets() + 1);
-        resetPoints();
-        resetGames();
     }
 
     private void resetPoints() {
